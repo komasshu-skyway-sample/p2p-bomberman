@@ -1,5 +1,9 @@
 # Peer-to-Peer Bomberman Game
 
+## game url (with skyway)
+
+https://komasshu-skyway-sample.github.io/p2p-bomberman/src/
+
 ## Introduction
 
 This is an implementation of the popular bomberman game for browsers using HTML5. The interesting thing is, that it uses most recent WebRTC technology to allow playing multiplayer games via a direct peer to peer (i.e. browser to browser) communication.
