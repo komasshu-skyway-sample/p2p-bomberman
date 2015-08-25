@@ -16,7 +16,7 @@ var MsgTypePlayerBomb       = 4;
 var MsgTypePlayerUpgrade    = 5;
 
 /**
- * P2P communication constructor. 
+ * P2P communication constructor.
  */
 function P2PCommClass() {
     this._peer          = null;     // peer.js Peer object
@@ -58,9 +58,10 @@ P2PCommClass.prototype.getPeerId = function() {
 P2PCommClass.prototype.createPeer = function(successFn, errorFn) {
     // create a peer
     this._peer = new Peer({
-        host:   Conf.peerJsHost,
-        port:   Conf.peerJsPort,
-        debug:  Conf.peerJsDebug
+        host:   "skyway.io",
+        port:   443,
+        debug:  true,
+        key: "dbd7fb02-54b3-4118-92b6-7c4ab4f03204"
     });
 
     // set the 'open' handler function
@@ -122,7 +123,7 @@ P2PCommClass.prototype.joinPeer = function(peerId) {
     // error handler
     conn.on('error', function(err) {
         defaultErrorFn.call(this, err);
-        
+
         // callback#3: joined
         var cbErr = this._connEstablishingHandler[2];
         cbErr.fn.call(cbErr.obj);
@@ -143,7 +144,7 @@ P2PCommClass.prototype.disconnectFromPeer = function(peerId) {
 /**
  * Will set a message handler callback function <cbFn> (on object <cbObj>)
  * for message <type>. When <add> is true, you can add multiple callbacks
- * for each <type>. 
+ * for each <type>.
  *
  * The callback function must handle two parameters: PeerConnection and a
  * message object.
@@ -166,7 +167,7 @@ P2PCommClass.prototype.setMsgHandler = function(type, cbObj, cbFn, add) {
             }
 
             this._msgHandler[type] = new Array();
-            
+
             if (oldHndl) {  // there was already a handler which was not an array
                 this._msgHandler[type].push(oldHndl);   // add this handler
             }
