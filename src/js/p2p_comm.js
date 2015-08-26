@@ -58,8 +58,6 @@ P2PCommClass.prototype.getPeerId = function() {
 P2PCommClass.prototype.createPeer = function(successFn, errorFn) {
     // create a peer
     this._peer = new Peer({
-        host:   "skyway.io",
-        port:   443,
         debug:  true,
         key: "dbd7fb02-54b3-4118-92b6-7c4ab4f03204"
     });
@@ -246,7 +244,7 @@ P2PCommClass.prototype.sendPlayerMetaData = function(receiverId, pl_id, pl_name,
 P2PCommClass.prototype.sendAll = function(msg) {
     console.log('sending message of type ' + msg.type + ' to all');
     for (var peerId in this._conn) {
-        var c = this._conn[peerId].peerjs;
+        var c = this._conn[peerId][0];
         c.send(msg);
     }
 }
@@ -256,7 +254,7 @@ P2PCommClass.prototype.sendAll = function(msg) {
  */
 P2PCommClass.prototype.sendTo = function(receiverId, msg) {
     console.log('sending message of type ' + msg.type + ' to peer ' + receiverId);
-    this._conn[receiverId].peerjs.send(msg);
+    this._conn[receiverId][0].send(msg);
 }
 
 /**
@@ -334,6 +332,7 @@ P2PCommClass.prototype._setupConnectionHandlers = function(conn) {
 
     // set data receiver function
     conn.on('data', function(msg) {
+        console.log(msg);
         this._incomingData(conn, msg);
     }.bind(this));
 
